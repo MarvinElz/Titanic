@@ -1,0 +1,10 @@
+# Boat, Nr, Places, X, Y, Orientation
+B 1 1 3 0 E
+B 4 2 5 0 S
+B 6 2 4 2 W
+# Person, Nr(A,B,C,...), X, Y
+P A 2 0
+P B 0 2
+P C 4 3
+P D 0 5
+P E 3 5 
