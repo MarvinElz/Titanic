@@ -56,8 +56,8 @@ public:
       return output;
    }
 
-private:
    Boat* m_boat;
+private:
    std::vector<Person*> m_rescued_persons;
    Direction m_dir;
 };

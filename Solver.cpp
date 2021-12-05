@@ -4,15 +4,33 @@
 #include <thread>
 #include <unistd.h>
 
+#include <map>
+
 #include <iostream>
 
 static bool stop = false;
+
+static void sort_by_steps( std::vector<Step>& possible_steps, const std::vector<Step>& last_steps ){
+   if( last_steps.empty() ) return;
+   std::map<const Boat*,int> last_boats;
+   
+   int counter = 0;
+   for( int i = 0; i < last_steps.size(); i++ ){
+      last_boats[ last_steps[i].m_boat ] = last_steps.size() - 1;
+   }
+   sort( possible_steps.begin(), possible_steps.end(), [=,&last_boats](const Step s1, const Step s2)
+   { 
+      if( last_boats.find(s1.m_boat) == last_boats.end()) return false;
+      if( last_boats.find(s2.m_boat) == last_boats.end()) return true;
+      return last_boats[s1.m_boat] < last_boats[s2.m_boat];
+   } );
+}
 
 static void print_progress(){
    while( !stop ){
       std::cout << ".";
       std::cout.flush();
-      usleep(1000000);
+      usleep(10000000);
    }
    std::cout << std::endl;
 }
@@ -47,7 +65,7 @@ void Solver::solve_deeper( Field* field, std::vector<Step>& steps ){
       return;
    }
    
-   if( steps.size() > 50 ){
+   if( steps.size() > 70 ){
       //std::cout << "Max Search depth reached." << std::endl;
       return;
    }
@@ -68,6 +86,9 @@ void Solver::solve_deeper( Field* field, std::vector<Step>& steps ){
       //std::cout << "No possible steps." << std::endl;
       return;
    }
+
+   // possible_steps sortieren, sodass das zuletzt bewegte Boat zuerst durchsucht wird
+   sort_by_steps( possible_steps, steps );
 
    //std::cout << "Possible_Steps: " << possible_steps.size() << std::endl;
 
