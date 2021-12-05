@@ -43,6 +43,15 @@ void Solver::solve_deeper( Field* field, std::vector<Step>& steps ){
       return;
    }
 
+   if( !result.empty() && steps.size() > result.size() ){
+      return;
+   }
+   
+   if( steps.size() > 50 ){
+      //std::cout << "Max Search depth reached." << std::endl;
+      return;
+   }
+
    fields[ field->unique_string() ] = steps.size();
 
    if( field->won() ){
