@@ -42,11 +42,11 @@ std::vector<Step> get_possible_steps( Field* field ){
             }
             
             for( int m1 = 0; m1 < rescued_persons_in_place[0].size(); m1++ ){
-               std::vector<Person*> rescued_persons;
-               rescued_persons.push_back( rescued_persons_in_place[0][m1] );
+               std::vector<Person*> rescued_persons(boat->size);
+               rescued_persons[0] = rescued_persons_in_place[0][m1];
                if( rescued_persons_in_place.size() > 1 ){
                   for( int m2 = 0; m2 < rescued_persons_in_place[1].size(); m2++ ){
-                     rescued_persons.push_back( rescued_persons_in_place[1][m2] );
+                     rescued_persons[1] = rescued_persons_in_place[1][m2];
                      steps.push_back( Step(boat, (Direction)j, rescued_persons ) );
                   }
                }else{

@@ -18,10 +18,14 @@ static void sort_by_steps( std::vector<Step>& possible_steps, const std::vector<
    for( int i = 0; i < last_steps.size(); i++ ){
       last_boats[ last_steps[i].m_boat ] = last_steps.size() - 1;
    }
-   sort( possible_steps.begin(), possible_steps.end(), [=,&last_boats](const Step s1, const Step s2)
+   sort( possible_steps.begin(), possible_steps.end(), [=,&last_boats](const Step& s1, const Step& s2)
    { 
+      if( s1.number_of_rescues() > s2.number_of_rescues() ) return true;
+      if( s1.number_of_rescues() < s2.number_of_rescues() ) return false;
+      
       if( last_boats.find(s1.m_boat) == last_boats.end()) return false;
       if( last_boats.find(s2.m_boat) == last_boats.end()) return true;
+      
       return last_boats[s1.m_boat] < last_boats[s2.m_boat];
    } );
 }
@@ -65,7 +69,7 @@ void Solver::solve_deeper( Field* field, std::vector<Step>& steps ){
       return;
    }
    
-   if( steps.size() > 70 ){
+   if( steps.size() > 72 ){
       //std::cout << "Max Search depth reached." << std::endl;
       return;
    }

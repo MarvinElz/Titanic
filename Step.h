@@ -55,6 +55,14 @@ public:
 		
       return output;
    }
+   
+   int number_of_rescues() const {
+		int count = 0;
+		for( int i = 0; i < m_rescued_persons.size(); i++ ){
+			if( m_rescued_persons[i] != nullptr ) count++;
+		}
+		return count;
+	}
 
    Boat* m_boat;
 private:
