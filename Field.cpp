@@ -104,6 +104,40 @@ bool Field::valid(){
    return true;
 }
 
+void Field::draw(){
+	char field[6][6]; // = {' '};
+   
+   memset( field, ' ', 6*6 );
+	
+	for( int i = 0; i < persons.size(); i++ ){
+		if( persons[i]->in_boat ) continue;
+		field[persons[i]->pos.x()][persons[i]->pos.y()] = persons[i]->name;
+	}
+	
+	for( int i = 0; i < boats.size(); i++ ){
+      Boat* boat = boats[i];
+      field[boat->pos.x()][boat->pos.y()] = boat->nr + '0';
+      for( int j = 0; j < boat->size; j++){
+         Eigen::Vector2i pos = boat->pos + (j+1) * dir2vec[boat->ori];
+         if( boat->persons[j] == nullptr ){
+			 // Platz leer
+			 field[pos.x()][pos.y()] = '0';
+		 }else{
+			 field[pos.x()][pos.y()] = boat->persons[j]->name;
+		 }
+      }
+   }
+   
+   std::cout << "------" << std::endl;
+   for( int y = 0; y < 6; y++){
+      for( int x = 0; x < 6; x++ ){
+         std::cout << (char)field[x][y];
+      } 
+      std::cout << std::endl;
+   }
+   std::cout << "------" << std::endl;   
+}
+
 Field::Field( std::string file_path ){
    std::string line;
    std::ifstream file (file_path);

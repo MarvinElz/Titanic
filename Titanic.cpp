@@ -20,6 +20,9 @@ int main( int argc, char** argv ){
 
    //std::cout << "Öffne Datei:" << argv[1] << std::endl; 
    Field field( argv[1] );
+   
+   std::cout << "Initial situation" << std::endl;
+   field.draw();
    //std::cout << field.unique_string() << std::endl;
 
    Solver solver;
@@ -30,4 +33,6 @@ int main( int argc, char** argv ){
    }
 
    solver.print_result();
+   std::cout << "Final situation" << std::endl;
+   field.draw();
 }

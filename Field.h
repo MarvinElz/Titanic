@@ -66,6 +66,8 @@ public:
    Field( std::string file );
 
    std::string unique_string();
+   
+   void draw();
 
    bool valid();
 

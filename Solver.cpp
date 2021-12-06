@@ -54,6 +54,10 @@ void Solver::solve( Field* field ){
    solve_deeper( field, steps );
    stop = true;
    solve_thread.join();
+   
+   for( int i = 0; i < result.size(); i++ ){
+      result[i].exe( field );
+   }   
 }
 
 void Solver::solve_deeper( Field* field, std::vector<Step>& steps ){
